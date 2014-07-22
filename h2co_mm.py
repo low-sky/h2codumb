@@ -97,12 +97,16 @@ def h2co_mm_radex(xarr,
     xarr = xarr.as_unit('Hz', quiet=True)
     Tex303,Tex322,Tex321,tau303,tau322,tau321 = gridbundle
 
+
+    # if this gets too far different from 1, we are gonna have a Bad Time.
+    scalefac = grid_vwidth/width
+
     tex = (Tex303(logColumn,logDensity,Temperature),
            Tex322(logColumn,logDensity,Temperature),
            Tex321(logColumn,logDensity,Temperature))
-    tau =  (tau303(logColumn,logDensity,Temperature),
-            tau322(logColumn,logDensity,Temperature),
-            tau321(logColumn,logDensity,Temperature))
+    tau =  (tau303(logColumn,logDensity,Temperature)*scalefac,
+            tau322(logColumn,logDensity,Temperature)*scalefac,
+            tau321(logColumn,logDensity,Temperature)*scalefac)
     if np.any(np.isnan(tex)) or np.any(np.isnan(tau)):
         raise ValueError("Invalid column/density")
 
