@@ -1,5 +1,6 @@
 from astropy.table import Table
 import numpy as np
+import matplotlib.pyplot as plt
 import scipy.interpolate as interp
 import astropy.units as u
 from pyspeckit.spectrum.units import SpectroscopicAxis 

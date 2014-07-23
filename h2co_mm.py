@@ -127,16 +127,25 @@ def h2co_mm_radex(xarr,
     Tbg = 2.73 #because it totally is
 
 
-    nu0 = [ 218.222192e9, 218.475632e9,218.760066e9]
+    nu0 = np.array([ 218.222192e9, 218.475632e9,218.760066e9])
     nuwidth = [width/ckms*nu for nu in nu0]
     nuoff = [xoff_v/ckms*nu for nu in nu0]
-    
-    spec = np.zeros(len(xarr))
-    for ii in range(len(nu0)):
-        taunu = tau[ii]*np.exp(-(xarr+nuoff[ii]-nu0[ii])**2/(2.0*nuwidth[ii]**2))
-        spec = spec + (1-np.exp(-taunu))*tex[ii] + Tbg*(np.exp(-taunu)-1)  #second term assumes an ON-OFF 
-#        import pdb 
-#        pdb.set_trace()
+    minfreq = nu0/1e9 - 0.25
+    maxfreq = nu0/1e9 + 0.25
+#    spec2 = np.zeros(len(xarr))
+#    for ii in range(len(nu0)):
+#        taunu = tau[ii]*np.exp(-(xarr+nuoff[ii]-nu0[ii])**2/(2.0*nuwidth[ii]**2))
+#        spec2 = spec2 + (1-np.exp(-taunu))*tex[ii] + Tbg*(np.exp(-taunu)-1)  #second term assumes an ON-OFF 
+
+    spec = np.sum([
+            (formaldehyde_mm_vtau(xarr, Tex=float(tex[ii]), tau=float(tau[ii]),
+                                  xoff_v=xoff_v, width=width, **kwargs)
+             * (xarr.as_unit('GHz')>minfreq[ii]) * (xarr.as_unit('GHz')<maxfreq[ii])) for ii in xrange(len(tex))],
+                  axis=0)
+#    import pdb 
+#    pdb.set_trace()
+        
+
     return spec
 
 
