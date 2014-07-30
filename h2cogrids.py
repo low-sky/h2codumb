@@ -2,7 +2,7 @@ from astropy.table import Table
 import pyradex
 import numpy as np
 
-R = pyradex.Radex(column=1e16,abundance=1e-4)
+R = pyradex.Radex(column=1e16,abundance=1e-4,species='ph2co-h2')
 
 fortho = 0.75
 
@@ -10,15 +10,15 @@ nDens = 21
 nlower = 2
 nupper = 6
 
-nCol = 21
+nCol = 41
 Nlower = 10
-Nupper = 14
+Nupper = 16
 
 nTemp = 51
 Tlower = 10
-Tupper = 300
+Tupper = 1000
 
-Temps = np.linspace(Tlower, Tupper,nTemp)
+Temps = np.logspace(1,3,nTemp)
 Cols = 1e1**np.linspace(Nlower,Nupper,nCol)
 Densities = 1e1**(np.linspace(nlower,nupper,nDens))
 
