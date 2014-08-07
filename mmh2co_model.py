@@ -54,10 +54,11 @@ def H2COModel(t):
                       lognbins.shape+logFWHMbins.shape)
     tau321[TempIdx,logNIdx,lognIdx,logFWHMIdx]=t['tau_321_220'].data
 
-    def ModelFunction(Temp,logN,logn,logFWHM):
+    def ModelFunction(Temperature = 31,logColumn = 13.5,
+                      logDensity = 3.3, logwidth = 0.2):
         try:
-            coords = np.array([[Tempaxis(Temp),logNaxis(logN),
-                            lognaxis(logn),logFHWMaxis(logFWHM)]])
+            coords = np.array([[Tempaxis(Temperature),logNaxis(logColumn),
+                            lognaxis(logDensity),logFHWMaxis(logwidth)]])
         except ValueError:
 # If the value is out of bounds on an axis, ValueError
 # is thrown so return some NaNs
