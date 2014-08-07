@@ -1,12 +1,7 @@
 from astropy.table import Table
 import numpy as np
-import matplotlib.pyplot as plt
 import scipy.interpolate as interp
-import astropy.units as u
 import scipy.ndimage as nd
-
-#from pyspeckit.spectrum.units import SpectroscopicAxis 
-t = Table.read('ph2cogrid.fits.gz',format='fits')
 
 def H2COModel(t):
     Temps = t['Temperature'].data
