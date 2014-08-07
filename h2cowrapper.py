@@ -11,8 +11,8 @@ execfile('h2co_mm.py')
 Temps = t['Temperature']
 logN = np.log10(t['Column'])
 logn = np.log10(t['nH2'])
-
-axes =  np.array([logN.ravel(),logn.ravel(),Temps.ravel()]).T
+FWHM = t['FWHM']
+axes =  np.array([logN.ravel(),logn.ravel(),Temps.ravel(),FWHM.ravel()]).T
 
 Tex303 = interp.LinearNDInterpolator(axes,t['Tex_303_202'])
 Tex322 = interp.LinearNDInterpolator(axes,t['Tex_322_221'])
